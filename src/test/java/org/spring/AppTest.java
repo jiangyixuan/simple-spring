@@ -1,4 +1,4 @@
-package org.smart4j;
+package org.spring;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
