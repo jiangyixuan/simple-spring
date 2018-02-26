@@ -19,5 +19,4 @@ public interface ConfigConstant {
     String APP_JSP_PATH = "spring.framework.app.jsp_path";
     String JDBC_ASSERT_PATH = "spring.framework.app.asset_path";
 
-
 }
