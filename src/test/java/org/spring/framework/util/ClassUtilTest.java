@@ -2,6 +2,7 @@ package org.spring.framework.util;
 
 import org.junit.Test;
 
+import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.HashSet;
 import java.util.Set;
@@ -34,7 +35,15 @@ public class ClassUtilTest {
         for (Class aClass : set) {
             System.out.println(aClass.getName());
         }
+    }
 
+    @Test
+    public void getClassSet() throws IOException {
+
+        Set<Class<?>> classSet = ClassUtil.getClassSet("org.spring.framework");
+        for (Class aClass : classSet) {
+            System.out.println(aClass.getName());
+        }
     }
 
 }

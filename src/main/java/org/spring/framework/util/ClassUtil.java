@@ -6,10 +6,13 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
+import java.net.JarURLConnection;
 import java.net.URL;
 import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
 
 /**
  * @author jiangyixuan
@@ -110,16 +113,36 @@ public class ClassUtil {
                     String protocol = url.getProtocol();
                     if (protocol.equals("file")) {
                         String packagePath = url.getPath().replace("%20", " ");
+                        addClass(classSet, packagePath.substring(1, packagePath.length()), packageName);
+                    } else if (protocol.equals("jar")) {
+                        JarURLConnection jarURLConnection = (JarURLConnection) url.openConnection();
+                        url.openConnection();
+                        if (jarURLConnection != null) {
+                            JarFile jarFile = jarURLConnection.getJarFile();
+                            if (jarFile != null) {
+                                Enumeration<JarEntry> jarEntries = jarFile.entries();
+                                while (jarEntries.hasMoreElements()) {
+                                    JarEntry jarEntry = jarEntries.nextElement();
+                                    String jarEntryName = jarEntry.getName();
+                                    if (jarEntryName.equals(".class")) {
+                                        String className = jarEntryName.substring(0, jarEntryName.lastIndexOf(".")).replaceAll("/", ".");
+                                        doAddClass(classSet, className);
+                                    }
+
+                                }
+                            }
+
+                        }
                     }
                 }
 
             }
 
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("get class set failire", e);
+            throw new RuntimeException(e);
         }
-
-        return null;
+        return classSet;
     }
 
     /**
