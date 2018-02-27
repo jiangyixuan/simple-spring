@@ -3,7 +3,13 @@ package org.spring.framework.util;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
+import java.io.FileFilter;
+import java.io.IOException;
 import java.net.URL;
+import java.util.Enumeration;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author jiangyixuan
@@ -34,6 +40,8 @@ public class ClassUtil {
 
     /**
      * 加载类（将自动初始化）
+     * @param className
+     * @return
      */
     public static Class<?> loadClass(String className) {
         return loadClass(className, true);
@@ -41,8 +49,11 @@ public class ClassUtil {
 
     /**
      * 加载类
+     * @param className
+     * @param isInitialized
+     * @return
      */
-    public static Class<?> loadClass(String className, boolean isInitialized) {
+    private static Class<?> loadClass(String className, boolean isInitialized) {
         Class<?> cls;
         try {
             cls = Class.forName(className, isInitialized, getClassLoader());
@@ -79,6 +90,90 @@ public class ClassUtil {
      */
     public static boolean isString(Class<?> type) {
         return type.equals(String.class);
+    }
+
+
+    /**
+     * 获取指定包名下的所有类
+     *
+     * @param packageName
+     * @return
+     */
+    public static Set<Class<?>> getClassSet(String packageName) {
+
+        Set<Class<?>> classSet = new HashSet<Class<?>>();
+        try {
+            Enumeration<URL> urls = getClassLoader().getResources(packageName.replace(".", "/"));
+            while (urls.hasMoreElements()) {
+                URL url = urls.nextElement();
+                if (url != null) {
+                    String protocol = url.getProtocol();
+                    if (protocol.equals("file")) {
+                        String packagePath = url.getPath().replace("%20", " ");
+                    }
+                }
+
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    /**
+     * 加载指定目录下的所有class文件
+     */
+    public static void addClass(Set<Class<?>> classSet, String packagePath, String packageName) {
+
+        //读取packagePath下的class文件
+        File[] files = new File(packagePath).listFiles(new FileFilter() {
+
+            @Override
+            public boolean accept(File file) {
+                return (file.isFile() && file.getName().endsWith(".class")) || file.isDirectory();
+            }
+
+        });
+        for (File file : files) {
+
+            String fileName = file.getName();
+            //加载该class文件
+            if (file.isFile()) {
+                String className = fileName.substring(0, fileName.lastIndexOf("."));
+                if (StringUtil.isNotEmpty(packageName)) {
+                    className = packageName + "." + className;
+                }
+                //classSet集合添加该加载的class文件
+                doAddClass(classSet, className);
+            } else {
+
+                String subPackagePath = fileName;
+                if (StringUtil.isNotEmpty(packagePath)) {
+                    subPackagePath = packagePath + "/" + fileName;
+                }
+                String subPackageName = fileName;
+                if (StringUtil.isNotEmpty(packageName)) {
+                    subPackageName = packageName + "." + subPackageName;
+                }
+                //递归添加目录下的所有class文件
+                addClass(classSet, subPackagePath, subPackageName);
+            }
+
+        }
+
+    }
+
+    /**
+     * 存储保存的class对象
+     *
+     * @param classeSet
+     * @param className
+     */
+    private static void doAddClass(Set<Class<?>> classeSet, String className) {
+        Class<?> cls = loadClass(className, false);
+        classeSet.add(cls);
     }
 
 }

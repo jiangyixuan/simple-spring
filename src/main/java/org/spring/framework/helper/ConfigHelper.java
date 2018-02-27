@@ -49,4 +49,12 @@ public class ConfigHelper {
         return PropsUtil.getString(CONFIG_PROPS, ConfigConstant.JDBC_PASSWORD);
     }
 
+    /**
+     * 获取项目的基础包名
+     *
+     * @return
+     */
+    public static String getAppBasePackage() {
+        return PropsUtil.getString(CONFIG_PROPS, ConfigConstant.APP_BASE_PACKAGE);
+    }
 }
