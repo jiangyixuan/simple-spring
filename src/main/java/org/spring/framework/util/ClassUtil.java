@@ -106,6 +106,7 @@ public class ClassUtil {
 
         Set<Class<?>> classSet = new HashSet<Class<?>>();
         try {
+            //以URL对象的形式保存了路径下的所有资源
             Enumeration<URL> urls = getClassLoader().getResources(packageName.replace(".", "/"));
             while (urls.hasMoreElements()) {
                 URL url = urls.nextElement();
@@ -113,7 +114,7 @@ public class ClassUtil {
                     String protocol = url.getProtocol();
                     if (protocol.equals("file")) {
                         String packagePath = url.getPath().replace("%20", " ");
-                        addClass(classSet, packagePath.substring(1, packagePath.length()), packageName);
+                        addClass(classSet, packagePath, packageName);
                     } else if (protocol.equals("jar")) {
                         JarURLConnection jarURLConnection = (JarURLConnection) url.openConnection();
                         url.openConnection();
@@ -128,10 +129,8 @@ public class ClassUtil {
                                         String className = jarEntryName.substring(0, jarEntryName.lastIndexOf(".")).replaceAll("/", ".");
                                         doAddClass(classSet, className);
                                     }
-
                                 }
                             }
-
                         }
                     }
                 }

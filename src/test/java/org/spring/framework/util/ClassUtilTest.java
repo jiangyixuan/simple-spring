@@ -4,6 +4,8 @@ import org.junit.Test;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.net.URL;
+import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -30,7 +32,7 @@ public class ClassUtilTest {
 
         Set<Class<?>> set = new HashSet<Class<?>>();
 
-        new ClassUtil().addClass(set, "G:\\Java高级架构师46阶段\\41.第四十一阶段、shiro综合教程\\另一套shiro\\shrio视频\\shiro第一天\\day01_shiro\\案例\\simple-spring\\target\\classes\\org\\spring\\framework",
+        new ClassUtil().addClass(set, "E:\\simple-spring\\target\\classes\\org\\spring\\framework",
                 "org.spring.framework");
         for (Class aClass : set) {
             System.out.println(aClass.getName());
@@ -40,9 +42,21 @@ public class ClassUtilTest {
     @Test
     public void getClassSet() throws IOException {
 
-        Set<Class<?>> classSet = ClassUtil.getClassSet("org.spring.framework");
-        for (Class aClass : classSet) {
-            System.out.println(aClass.getName());
+//        Set<Class<?>> classSet = ClassUtil.getClassSet("org.spring.framework");
+//        for (Class aClass : classSet) {
+//            System.out.println(aClass.getName());
+//        }
+
+        Enumeration<URL> urls = Thread.currentThread().getContextClassLoader().getResources("org/spring/framework");
+
+        while (urls.hasMoreElements()) {
+            URL url = urls.nextElement();
+            if (url != null) {
+                String protocol = url.getProtocol();
+                System.out.println(protocol);
+                System.out.println(url.getFile());
+
+            }
         }
     }
 
