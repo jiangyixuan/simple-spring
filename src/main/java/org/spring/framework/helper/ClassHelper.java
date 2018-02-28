@@ -1,5 +1,6 @@
 package org.spring.framework.helper;
 
+import org.spring.framework.annottation.Controller;
 import org.spring.framework.util.ClassUtil;
 
 import java.util.Set;
@@ -28,5 +29,23 @@ public class ClassHelper {
         return CLASS_SET;
     }
 
+
+    /**
+     * 获取应用包名下的所有Controller类
+     *
+     * @return
+     */
+    public static Set<Class<?>> getControllerClassSet() {
+
+        Set<Class<?>> classSet = getClassSet();
+        if (classSet != null) {
+            for (Class<?> cls : classSet) {
+                if (cls.isAnnotationPresent(Controller.class)) {
+                    classSet.remove(cls);
+                }
+            }
+        }
+        return classSet;
+    }
 
 }
