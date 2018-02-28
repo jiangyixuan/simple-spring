@@ -57,4 +57,22 @@ public class ConfigHelper {
     public static String getAppBasePackage() {
         return PropsUtil.getString(CONFIG_PROPS, ConfigConstant.APP_BASE_PACKAGE);
     }
+
+    /**
+     * 获取Jsp文件路径
+     *
+     * @return
+     */
+    public static String getAppJspPath() {
+        return PropsUtil.getString(CONFIG_PROPS, ConfigConstant.APP_JSP_PATH);
+    }
+
+    /**
+     * 获取Jsp文件路径
+     *
+     * @return
+     */
+    public static String getAppAssetPath() {
+        return PropsUtil.getString(CONFIG_PROPS, ConfigConstant.APP_ASSERT_PATH);
+    }
 }

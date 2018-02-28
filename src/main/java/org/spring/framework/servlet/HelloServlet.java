@@ -1,5 +1,7 @@
 package org.spring.framework.servlet;
 
+import org.spring.framework.util.StreamUtil;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,18 +13,9 @@ import java.io.IOException;
  * @author jiangyixuan
  * @date 2018-02-28
  */
-@WebServlet("/HelloServlet")
+//容器在应用启动时就加载并初始化这个servlet
+@WebServlet(urlPatterns = "/*", loadOnStartup = 0)
 public class HelloServlet extends HttpServlet {
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        System.out.println("doPost");
-    }
-
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        System.out.println("doGet");
-    }
 
     @Override
     public void init() throws ServletException {
@@ -31,7 +24,10 @@ public class HelloServlet extends HttpServlet {
 
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println("service");
-        super.service(req, resp);
+        System.out.println(req.getMethod());
+        System.out.println(req.getPathInfo());
+
+        System.out.println(StreamUtil.getString(req.getInputStream()));
+
     }
 }

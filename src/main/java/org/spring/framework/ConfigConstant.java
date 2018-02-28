@@ -8,6 +8,8 @@ package org.spring.framework;
  */
 public interface ConfigConstant {
 
+    String UTF_8 = "UTF-8";
+
     String CONFIG_FILE = "simple-spring.properties";
 
     String JDBC_DRIVER = "spring.framework.jdbc.driver";
@@ -17,6 +19,6 @@ public interface ConfigConstant {
 
     String APP_BASE_PACKAGE = "spring.framework.app.base_package";
     String APP_JSP_PATH = "spring.framework.app.jsp_path";
-    String JDBC_ASSERT_PATH = "spring.framework.app.asset_path";
+    String APP_ASSERT_PATH = "spring.framework.app.asset_path";
 
 }
