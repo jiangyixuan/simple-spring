@@ -1,9 +1,15 @@
 package org.spring.framework;
 
+import org.apache.log4j.BasicConfigurator;
 import org.spring.framework.bean.Handler;
+import org.spring.framework.bean.Param;
 import org.spring.framework.helper.BeanHelper;
 import org.spring.framework.helper.ConfigHelper;
 import org.spring.framework.helper.ControllerHelper;
+import org.spring.framework.util.ArrayUtil;
+import org.spring.framework.util.CodecUtil;
+import org.spring.framework.util.StreamUtil;
+import org.spring.framework.util.StringUtil;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -27,6 +33,9 @@ public class DispatcherServlet extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
+
+        //暂时先使用slf4j默认配置
+        BasicConfigurator.configure();
         //初始化相关Helper类
         HelperLoader.init();
         //获取ServletContext对象（用于注册Servlet）
@@ -55,7 +64,7 @@ public class DispatcherServlet extends HttpServlet {
             //创建请求参数对象
             Map<String, Object> paramMap = new HashMap<String, Object>();
 
-            //获取表单参数
+            //获取url参数
             Enumeration<String> parameterNames = req.getParameterNames();
 
             while (parameterNames.hasMoreElements()) {
@@ -64,6 +73,27 @@ public class DispatcherServlet extends HttpServlet {
 
                 paramMap.put(paramName, paramValue);
             }
+
+            //获取请求体参数
+            String body = CodecUtil.decodeURL(StreamUtil.getString(req.getInputStream()));
+            if (StringUtil.isNotEmpty(body)) {
+                //当前仅当  Content-Type: application/x-www-form-urlencoded
+                String[] params = StringUtil.splitString(body, "&");
+                if (ArrayUtil.isNotEmpty(params)) {
+                    for (String param : params) {
+                        String[] array = StringUtil.splitString(param, "=");
+                        if (ArrayUtil.isNotEmpty(array)) {
+                            String paramName = array[0];
+                            String paramValue = array[1];
+
+                            paramMap.put(paramName, paramValue);
+                        }
+                    }
+                }
+            }
+            Param param = new Param(paramMap);
+
+
 
         }
 

@@ -14,19 +14,13 @@ import java.io.OutputStream;
  */
 public class StreamUtil {
 
-    //TODO LoggerFactory未被加载，尚未解决
     private static final Logger logger = LoggerFactory.getLogger(StreamUtil.class);
-
-    static {
-//        BasicConfigurator.configure();
-    }
 
     /**
      * 从输入流中获取字符串
      */
     public static String getString(InputStream is) {
 
-        logger.info("sssssssssssssssssssssss");
         StringBuilder sb = new StringBuilder();
         try {
             BufferedReader reader = new BufferedReader(new InputStreamReader(is));
