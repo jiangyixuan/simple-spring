@@ -1,23 +1,26 @@
 package org.spring.framework;
 
+import com.alibaba.druid.support.json.JSONUtils;
 import org.apache.log4j.BasicConfigurator;
+import org.spring.framework.bean.Data;
 import org.spring.framework.bean.Handler;
 import org.spring.framework.bean.Param;
+import org.spring.framework.bean.View;
 import org.spring.framework.helper.BeanHelper;
 import org.spring.framework.helper.ConfigHelper;
 import org.spring.framework.helper.ControllerHelper;
-import org.spring.framework.util.ArrayUtil;
-import org.spring.framework.util.CodecUtil;
-import org.spring.framework.util.StreamUtil;
-import org.spring.framework.util.StringUtil;
+import org.spring.framework.util.*;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRegistration;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.lang.reflect.Method;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
@@ -28,7 +31,8 @@ import java.util.Map;
  * @author jiangyixuan
  * @date 2018-02-28
  */
-
+//容器在应用启动时就加载并初始化这个servlet
+@WebServlet(urlPatterns = "/*", loadOnStartup = 0)
 public class DispatcherServlet extends HttpServlet {
 
     @Override
@@ -93,6 +97,46 @@ public class DispatcherServlet extends HttpServlet {
             }
             Param param = new Param(paramMap);
 
+            //调用Action方法
+            Method actionMethod = handler.getActionMethod();
+            Object result = ReflectionUtil.invokeMethod(controllerBean,actionMethod,param);
+
+            //处理Action方法返回值
+            if(result instanceof View){
+                //返回JSP页面
+                View view = (View)result;
+                String path = view.getPath();
+                if(StringUtil.isNotEmpty(path)){
+                    if(path.startsWith("/")){
+                        //重定向
+                        resp.sendRedirect(req.getContextPath()+path);
+                    }else {
+                        Map<String,Object> model = view.getModel();
+                        for(Map.Entry<String,Object> entry:model.entrySet()){
+                            req.setAttribute(entry.getKey(),entry.getValue());
+                        }
+                    }
+                    //转发
+                    req.getRequestDispatcher(ConfigHelper.getAppJspPath()+path).forward(req,resp);
+                }
+            }
+            else if(result instanceof Data){
+                //返回Json数据
+                Data data = (Data) result;
+
+                Object model = data.getModel();
+                if(model!=null){
+                    resp.setContentType("application/json");
+                    resp.setCharacterEncoding("UTF-8");
+                    PrintWriter writer = resp.getWriter();
+                    String json = JSONUtils.toJSONString(model);
+                    writer.write(json);
+                    //关闭资源
+                    writer.flush();
+                    writer.close();
+                }
+
+            }
 
 
         }

@@ -6,10 +6,6 @@ package org.spring.framework;
  */
 public class Person {
 
-    static {
-        System.out.println("运行Person类静态代码块");
-    }
-
     private String name;
     private Integer age;
 

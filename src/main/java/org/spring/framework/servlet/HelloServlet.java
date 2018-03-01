@@ -17,7 +17,7 @@ import java.io.IOException;
  * @date 2018-02-28
  */
 //容器在应用启动时就加载并初始化这个servlet
-@WebServlet(urlPatterns = "/*", loadOnStartup = 0)
+//@WebServlet(urlPatterns = "/*", loadOnStartup = 0)
 public class HelloServlet extends HttpServlet {
 
     @Override

@@ -2,6 +2,7 @@ package org.spring.framework.helper;
 
 import org.spring.framework.util.ReflectionUtil;
 
+import java.lang.reflect.Constructor;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -20,11 +21,24 @@ public class BeanHelper {
     static {
         Set<Class<?>> beanClassSet = ClassHelper.getClassSet();
         for (Class<?> beanClass : beanClassSet) {
-
+            System.out.println(beanClass);
             //过滤掉接口以及注解
             if (!beanClass.isInterface() && !beanClass.isAnnotation()) {
-                Object obj = ReflectionUtil.newInstance(beanClass);
-                BEAN_MAP.put(beanClass, obj);
+
+                //TODO 暂时不实现基础包下含构造参数类的初始化
+                //记录是否有重载的构造方法
+                boolean temp = false;
+                Constructor<?>[] aConstructors = beanClass.getConstructors();
+                for(Constructor constructor:aConstructors){
+                    if(constructor.getParameterAnnotations().length>0){
+                        temp = true;
+                    }
+                }
+                if(!temp){
+                    Object obj = ReflectionUtil.newInstance(beanClass);
+                    BEAN_MAP.put(beanClass, obj);
+                }
+
             }
 
         }
