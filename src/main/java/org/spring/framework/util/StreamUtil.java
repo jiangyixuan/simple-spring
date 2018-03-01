@@ -1,5 +1,8 @@
 package org.spring.framework.util;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -12,13 +15,18 @@ import java.io.OutputStream;
 public class StreamUtil {
 
     //TODO LoggerFactory未被加载，尚未解决
-//    private static final Logger logger = LoggerFactory.getLogger(StreamUtil.class);
+    private static final Logger logger = LoggerFactory.getLogger(StreamUtil.class);
+
+    static {
+//        BasicConfigurator.configure();
+    }
 
     /**
      * 从输入流中获取字符串
      */
     public static String getString(InputStream is) {
 
+        logger.info("sssssssssssssssssssssss");
         StringBuilder sb = new StringBuilder();
         try {
             BufferedReader reader = new BufferedReader(new InputStreamReader(is));
@@ -27,7 +35,7 @@ public class StreamUtil {
                 sb.append(line);
             }
         } catch (Exception e) {
-//            logger.error("Stream 转 String 出错！", e);
+            logger.error("Stream 转 String 出错！", e);
             throw new RuntimeException(e);
         }
         return sb.toString();
@@ -45,14 +53,14 @@ public class StreamUtil {
             }
             outputStream.flush();
         } catch (Exception e) {
-//            logger.error("复制流出错！", e);
+            logger.error("复制流出错！", e);
             throw new RuntimeException(e);
         } finally {
             try {
                 inputStream.close();
                 outputStream.close();
             } catch (Exception e) {
-//                logger.error("释放资源出错！", e);
+                logger.error("释放资源出错！", e);
             }
         }
     }

@@ -1,7 +1,5 @@
 package org.spring.framework.servlet;
 
-import org.spring.framework.util.StreamUtil;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -19,7 +17,7 @@ public class HelloServlet extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
-        System.out.println("init");
+        System.out.println("===============HelloServletinit===================");
     }
 
     @Override
@@ -27,7 +25,6 @@ public class HelloServlet extends HttpServlet {
         System.out.println(req.getMethod());
         System.out.println(req.getPathInfo());
 
-        System.out.println(StreamUtil.getString(req.getInputStream()));
 
     }
 }
