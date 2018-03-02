@@ -11,9 +11,7 @@ import org.spring.framework.helper.ConfigHelper;
 import org.spring.framework.helper.ControllerHelper;
 import org.spring.framework.util.*;
 
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
-import javax.servlet.ServletRegistration;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -42,14 +40,14 @@ public class DispatcherServlet extends HttpServlet {
         BasicConfigurator.configure();
         //初始化相关Helper类
         HelperLoader.init();
-        //获取ServletContext对象（用于注册Servlet）
-        ServletContext servletContext = getServletConfig().getServletContext();
-        //注册处理JSP的Servlet
-        ServletRegistration jspServlet = servletContext.getServletRegistration("jsp");
-        jspServlet.addMapping(ConfigHelper.getAppJspPath() + "*");
-        //注册处理静态资源额默认Servlet
-        ServletRegistration defaultServlet = servletContext.getServletRegistration("default");
-        defaultServlet.addMapping(ConfigHelper.getAppAssetPath() + "*");
+//        //获取ServletContext对象（用于注册Servlet）
+//        ServletContext servletContext = getServletConfig().getServletContext();
+//        //注册处理JSP的Servlet
+//        ServletRegistration jspServlet = servletContext.getServletRegistration("jsp");
+//        jspServlet.addMapping(ConfigHelper.getAppJspPath() + "*");
+//        //注册处理静态资源额默认Servlet
+//        ServletRegistration defaultServlet = servletContext.getServletRegistration("default");
+//        defaultServlet.addMapping(ConfigHelper.getAppAssetPath() + "*");
     }
 
     @Override
@@ -99,33 +97,32 @@ public class DispatcherServlet extends HttpServlet {
 
             //调用Action方法
             Method actionMethod = handler.getActionMethod();
-            Object result = ReflectionUtil.invokeMethod(controllerBean,actionMethod,param);
+            Object result = ReflectionUtil.invokeMethod(controllerBean, actionMethod, param);
 
             //处理Action方法返回值
-            if(result instanceof View){
+            if (result instanceof View) {
                 //返回JSP页面
-                View view = (View)result;
+                View view = (View) result;
                 String path = view.getPath();
-                if(StringUtil.isNotEmpty(path)){
-                    if(path.startsWith("/")){
+                if (StringUtil.isNotEmpty(path)) {
+                    if (path.startsWith("/")) {
                         //重定向
-                        resp.sendRedirect(req.getContextPath()+path);
-                    }else {
-                        Map<String,Object> model = view.getModel();
-                        for(Map.Entry<String,Object> entry:model.entrySet()){
-                            req.setAttribute(entry.getKey(),entry.getValue());
+                        resp.sendRedirect(req.getContextPath() + path);
+                    } else {
+                        Map<String, Object> model = view.getModel();
+                        for (Map.Entry<String, Object> entry : model.entrySet()) {
+                            req.setAttribute(entry.getKey(), entry.getValue());
                         }
                     }
                     //转发
-                    req.getRequestDispatcher(ConfigHelper.getAppJspPath()+path).forward(req,resp);
+                    req.getRequestDispatcher(ConfigHelper.getAppJspPath() + path).forward(req, resp);
                 }
-            }
-            else if(result instanceof Data){
+            } else if (result instanceof Data) {
                 //返回Json数据
                 Data data = (Data) result;
 
                 Object model = data.getModel();
-                if(model!=null){
+                if (model != null) {
                     resp.setContentType("application/json");
                     resp.setCharacterEncoding("UTF-8");
                     PrintWriter writer = resp.getWriter();
@@ -137,10 +134,11 @@ public class DispatcherServlet extends HttpServlet {
                 }
 
             }
-
+        } else {
+            //不存在对应的Handle，404
+            PrintWriter writer = resp.getWriter();
+            writer.write("404");
 
         }
-
-
     }
 }

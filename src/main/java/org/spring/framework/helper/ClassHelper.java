@@ -3,6 +3,7 @@ package org.spring.framework.helper;
 import org.spring.framework.annottation.Controller;
 import org.spring.framework.util.ClassUtil;
 
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -38,14 +39,15 @@ public class ClassHelper {
     public static Set<Class<?>> getControllerClassSet() {
 
         Set<Class<?>> classSet = getClassSet();
+        Set<Class<?>> result = new HashSet<Class<?>>();
         if (classSet != null) {
             for (Class<?> cls : classSet) {
                 if (cls.isAnnotationPresent(Controller.class)) {
-                    classSet.remove(cls);
+                    result.add(cls);
                 }
             }
         }
-        return classSet;
+        return result;
     }
 
 }

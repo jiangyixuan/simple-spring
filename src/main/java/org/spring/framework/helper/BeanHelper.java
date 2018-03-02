@@ -21,7 +21,6 @@ public class BeanHelper {
     static {
         Set<Class<?>> beanClassSet = ClassHelper.getClassSet();
         for (Class<?> beanClass : beanClassSet) {
-            System.out.println(beanClass);
             //过滤掉接口以及注解
             if (!beanClass.isInterface() && !beanClass.isAnnotation()) {
 
