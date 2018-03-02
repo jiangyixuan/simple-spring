@@ -40,7 +40,7 @@ public class ControllerHelper {
                         Action action = method.getAnnotation(Action.class);
                         String mapping = action.value();
 
-                        //验证URL映射规则,url为 get:/hello 形式
+                        //验证URL映射规则,url为 ACTION_MAP:/hello 形式
                         if (true) {
                             String[] array = mapping.split(":");
                             if (ArrayUtil.isNotEmpty(array) && array.length == 2) {
@@ -68,7 +68,9 @@ public class ControllerHelper {
      * @return
      */
     public static Handler getHandler(String requestMethod, String requestPath) {
+
         Request request = new Request(requestMethod, requestPath);
+
         return ACTION_MAP.get(request);
     }
 

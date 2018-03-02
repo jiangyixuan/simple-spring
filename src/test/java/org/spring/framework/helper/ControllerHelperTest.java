@@ -1,6 +1,7 @@
 package org.spring.framework.helper;
 
 import org.junit.Test;
+import org.spring.framework.bean.Handler;
 
 /**
  * @author jiangyixuan
@@ -10,7 +11,8 @@ public class ControllerHelperTest {
 
     @Test
     public void getHandler() {
-        ControllerHelper.getHandler("get", "/hello");
+        Handler get = ControllerHelper.getHandler("get", "/hello");
+        System.out.println(get);
     }
 
 }

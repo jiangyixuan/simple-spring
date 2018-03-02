@@ -12,7 +12,7 @@ import org.spring.framework.bean.Data;
 @Controller
 public class HelloController {
 
-    @Action("/hello")
+    @Action("get:/hello")
     public Data hello() {
 
         Person person = new Person();

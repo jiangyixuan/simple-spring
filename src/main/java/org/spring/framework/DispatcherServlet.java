@@ -58,6 +58,7 @@ public class DispatcherServlet extends HttpServlet {
 
         //获取Action处理器
         Handler handler = ControllerHelper.getHandler(requestMethod, requestPath);
+
         if (handler != null) {
             //获取Controller类及其Bean实例
 
@@ -138,7 +139,6 @@ public class DispatcherServlet extends HttpServlet {
             //不存在对应的Handle，404
             PrintWriter writer = resp.getWriter();
             writer.write("404");
-
         }
     }
 }
