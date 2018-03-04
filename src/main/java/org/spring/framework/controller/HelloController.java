@@ -4,6 +4,7 @@ import org.spring.framework.Person;
 import org.spring.framework.annottation.Action;
 import org.spring.framework.annottation.Controller;
 import org.spring.framework.bean.Data;
+import org.spring.framework.bean.Param;
 
 /**
  * @author jiangyixuan
@@ -13,7 +14,7 @@ import org.spring.framework.bean.Data;
 public class HelloController {
 
     @Action("get:/hello")
-    public Data hello() {
+    public Data hello(Param param) {
 
         Person person = new Person();
         person.setName("jiangyixuan");

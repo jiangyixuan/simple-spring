@@ -1,6 +1,5 @@
 package org.spring.framework;
 
-import com.alibaba.druid.support.json.JSONUtils;
 import org.apache.log4j.BasicConfigurator;
 import org.spring.framework.bean.Data;
 import org.spring.framework.bean.Handler;
@@ -127,7 +126,7 @@ public class DispatcherServlet extends HttpServlet {
                     resp.setContentType("application/json");
                     resp.setCharacterEncoding("UTF-8");
                     PrintWriter writer = resp.getWriter();
-                    String json = JSONUtils.toJSONString(model);
+                    String json = JsonUtil.objectToJson(model);
                     writer.write(json);
                     //关闭资源
                     writer.flush();

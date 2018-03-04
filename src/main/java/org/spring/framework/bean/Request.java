@@ -1,7 +1,6 @@
 package org.spring.framework.bean;
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
+import java.util.Objects;
 
 /**
  * 封装请求信息Bean
@@ -37,12 +36,20 @@ public class Request {
     //requestMethod和requestPath相同时认定对象相同
     @Override
     public int hashCode() {
-        return HashCodeBuilder.reflectionHashCode(this);
+        return Objects.hash(requestPath, requestMethod);
     }
 
     @Override
     public boolean equals(Object obj) {
-        return EqualsBuilder.reflectionEquals(this, obj);
+        if (obj == this) {
+            return true;
+        }
+        if (!(obj instanceof Request)) {
+            return false;
+        }
+        Request request = (Request) obj;
+
+        return requestMethod.equals(request.getRequestMethod()) && requestPath.equals(request.getRequestPath());
     }
 
 }
