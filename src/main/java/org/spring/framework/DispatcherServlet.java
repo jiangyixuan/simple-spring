@@ -10,7 +10,9 @@ import org.spring.framework.helper.ConfigHelper;
 import org.spring.framework.helper.ControllerHelper;
 import org.spring.framework.util.*;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.servlet.ServletRegistration;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -39,14 +41,16 @@ public class DispatcherServlet extends HttpServlet {
         BasicConfigurator.configure();
         //初始化相关Helper类
         HelperLoader.init();
-//        //获取ServletContext对象（用于注册Servlet）
-//        ServletContext servletContext = getServletConfig().getServletContext();
-//        //注册处理JSP的Servlet
-//        ServletRegistration jspServlet = servletContext.getServletRegistration("jsp");
-//        jspServlet.addMapping(ConfigHelper.getAppJspPath() + "*");
-//        //注册处理静态资源额默认Servlet
-//        ServletRegistration defaultServlet = servletContext.getServletRegistration("default");
-//        defaultServlet.addMapping(ConfigHelper.getAppAssetPath() + "*");
+        //获取ServletContext对象（用于注册Servlet）
+        ServletContext servletContext = getServletConfig().getServletContext();
+        //注册处理JSP的Servlet
+        ServletRegistration jspServlet = servletContext.getServletRegistration("jsp");
+        System.out.println(ConfigHelper.getAppJspPath());
+        System.out.println(ConfigHelper.getAppAssetPath());
+        jspServlet.addMapping(ConfigHelper.getAppJspPath() + "*");
+        //注册处理静态资源额默认Servlet
+        ServletRegistration defaultServlet = servletContext.getServletRegistration("default");
+        defaultServlet.addMapping(ConfigHelper.getAppAssetPath() + "*");
     }
 
     @Override

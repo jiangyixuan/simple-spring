@@ -66,12 +66,7 @@ public class PropsUtil {
         String value = "";
         if (props.containsKey(key)) {
             value = props.getProperty(key);
-        } else {
-            //方便在当前项目写测试，正式使用时去除
-            value = "org.spring.framework";
         }
-
-
         return value;
     }
 
