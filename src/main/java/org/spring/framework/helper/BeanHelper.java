@@ -20,7 +20,9 @@ public class BeanHelper {
 
     static {
         Set<Class<?>> beanClassSet = ClassHelper.getClassSet();
+
         for (Class<?> beanClass : beanClassSet) {
+
             //过滤掉接口以及注解
             if (!beanClass.isInterface() && !beanClass.isAnnotation()) {
 
@@ -37,7 +39,6 @@ public class BeanHelper {
                     Object obj = ReflectionUtil.newInstance(beanClass);
                     BEAN_MAP.put(beanClass, obj);
                 }
-
             }
 
         }

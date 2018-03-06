@@ -23,14 +23,14 @@ public final class ReflectionUtil {
      * @return
      */
     public static Object newInstance(Class<?> cls) {
-        Object instnce;
+        Object instance;
         try {
-            instnce = cls.newInstance();
+            instance = cls.newInstance();
         } catch (Exception e) {
             logger.error("new instance failure", e);
             throw new RuntimeException(e);
         }
-        return instnce;
+        return instance;
     }
 
 

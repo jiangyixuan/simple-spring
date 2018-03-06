@@ -3,7 +3,9 @@ package org.spring.framework.helper;
 import org.spring.framework.annottation.Controller;
 import org.spring.framework.util.ClassUtil;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -49,5 +51,29 @@ public class ClassHelper {
         }
         return result;
     }
+
+    /**
+     * 获取指定接口下的所有实现类
+     *
+     * @param interfaceClass
+     * @return
+     */
+    public static List<Class<?>> getClassListByInterface(Class<?> interfaceClass) {
+        Set<Class<?>> classSet = getClassSet();
+        List<Class<?>> interfaceImpl = new ArrayList<Class<?>>();
+        if (classSet != null) {
+            for (Class<?> cls : classSet) {
+                Class<?>[] interfaces = cls.getInterfaces();
+                for (Class<?> interfaceCls : interfaces) {
+                    if (interfaceClass.equals(interfaceCls)) {
+                        interfaceImpl.add(cls);
+                    }
+                }
+            }
+        }
+        return interfaceImpl;
+    }
+
+
 
 }

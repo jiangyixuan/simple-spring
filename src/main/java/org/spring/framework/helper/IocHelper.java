@@ -5,6 +5,7 @@ import org.spring.framework.util.ArrayUtil;
 import org.spring.framework.util.ReflectionUtil;
 
 import java.lang.reflect.Field;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -18,6 +19,7 @@ public class IocHelper {
     static {
         //获取并遍历所有的Bean类
         Map<Class<?>, Object> beanMap = BeanHelper.getBeanMap();
+
         for (Map.Entry<Class<?>, Object> beanEntry : beanMap.entrySet()) {
             //获取Bean类和Bean实例
             Class<?> beanClass = beanEntry.getKey();
@@ -31,7 +33,10 @@ public class IocHelper {
                     if (beanField.isAnnotationPresent(Autowired.class)) {
                         //获取Bean字段对应的接口
                         Class<?> beanFieldClass = beanField.getType();
-                        Object beanFieldInstance = beanMap.get(beanFieldClass);
+                        //获取该接口所有的实现类
+                        List<Class<?>> classListByInterface = ClassHelper.getClassListByInterface(beanFieldClass);
+
+                        Object beanFieldInstance = beanMap.get(classListByInterface.get(0));
 
                         if (beanFieldInstance != null) {
                             //通过反射初始化BeanField的值

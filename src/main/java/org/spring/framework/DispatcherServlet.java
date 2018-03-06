@@ -1,6 +1,5 @@
 package org.spring.framework;
 
-import org.apache.log4j.BasicConfigurator;
 import org.spring.framework.bean.Data;
 import org.spring.framework.bean.Handler;
 import org.spring.framework.bean.Param;
@@ -38,19 +37,17 @@ public class DispatcherServlet extends HttpServlet {
     public void init() throws ServletException {
 
         //暂时先使用slf4j默认配置
-        BasicConfigurator.configure();
+//        BasicConfigurator.configure();
         //初始化相关Helper类
         HelperLoader.init();
         //获取ServletContext对象（用于注册Servlet）
         ServletContext servletContext = getServletConfig().getServletContext();
         //注册处理JSP的Servlet
         ServletRegistration jspServlet = servletContext.getServletRegistration("jsp");
-        System.out.println(ConfigHelper.getAppJspPath());
-        System.out.println(ConfigHelper.getAppAssetPath());
         jspServlet.addMapping(ConfigHelper.getAppJspPath() + "*");
-        //注册处理静态资源额默认Servlet
-        ServletRegistration defaultServlet = servletContext.getServletRegistration("default");
-        defaultServlet.addMapping(ConfigHelper.getAppAssetPath() + "*");
+//        //注册处理静态资源额默认Servlet
+//        ServletRegistration defaultServlet = servletContext.getServletRegistration("default");
+//        defaultServlet.addMapping(ConfigHelper.getAppAssetPath() + "*");
     }
 
     @Override

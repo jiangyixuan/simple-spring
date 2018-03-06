@@ -5,6 +5,7 @@ import org.spring.framework.util.ReflectionUtil;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Parameter;
+import java.util.Map;
 
 /**
  * Created by jiangyixuan on 2018/2/27.
@@ -16,7 +17,11 @@ public class BeanHelperTest {
 
         //TODO org.spring.framework.Param等含构造参数类不能被实例化，需要改变实例化方式
 
-        System.out.println(BeanHelper.getBeanMap());
+        Map<Class<?>, Object> beanMap = BeanHelper.getBeanMap();
+
+        for (Class cls : beanMap.keySet()) {
+            System.out.println(cls.getName());
+        }
 
     }
 

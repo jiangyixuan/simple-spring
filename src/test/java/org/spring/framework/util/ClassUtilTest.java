@@ -42,10 +42,10 @@ public class ClassUtilTest {
     @Test
     public void getClassSet() throws IOException {
 
-//        Set<Class<?>> classSet = ClassUtil.getClassSet("org.spring.framework");
-//        for (Class aClass : classSet) {
-//            System.out.println(aClass.getName());
-//        }
+        Set<Class<?>> classSet = ClassUtil.getClassSet("org.spring.framework");
+        for (Class aClass : classSet) {
+            System.out.println(aClass.getName());
+        }
 
         Enumeration<URL> urls = Thread.currentThread().getContextClassLoader().getResources("org/spring/framework");
 
