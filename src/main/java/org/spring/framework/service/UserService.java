@@ -1,13 +1,13 @@
 package org.spring.framework.service;
 
-import org.spring.framework.Person;
+import org.spring.framework.User;
 
 /**
  * @author jiangyixuan
  * @date 2018-03-06
  */
-public interface HelloService {
+public interface UserService {
 
-    Person getPerson();
+    User getUser();
 
 }

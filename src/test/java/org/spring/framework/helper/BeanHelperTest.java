@@ -2,7 +2,7 @@ package org.spring.framework.helper;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.spring.framework.service.impl.HelloServiceImpl;
+import org.spring.framework.service.impl.UserServiceImpl;
 
 import java.util.Map;
 
@@ -25,8 +25,8 @@ public class BeanHelperTest {
     @Test
     public void getAutowiredBean() {
 
-        System.out.println(BeanHelper.getBean(HelloServiceImpl.class));
-        Assert.assertNotNull(BeanHelper.getBean(HelloServiceImpl.class));
+        System.out.println(BeanHelper.getBean(UserServiceImpl.class));
+        Assert.assertNotNull(BeanHelper.getBean(UserServiceImpl.class));
     }
 
 }

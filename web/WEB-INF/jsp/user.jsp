@@ -14,6 +14,10 @@
 <body>
 
 </body>
-index!
+<%
+    String name = (String) request.getAttribute("name");
+    Integer age = (Integer) request.getAttribute("age");
+    out.println("user.jsp成功接收到姓名:" + name + "年龄:" + age);
+%>
 </body>
 </html>

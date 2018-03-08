@@ -4,7 +4,7 @@ package org.spring.framework;
  * @author jiangyixuan
  * @date 2018-02-27
  */
-public class Person {
+public class User {
 
     private String name;
     private Integer age;
