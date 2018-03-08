@@ -22,11 +22,9 @@ public class BeanHelper {
         Set<Class<?>> beanClassSet = ClassHelper.getClassSet();
 
         for (Class<?> beanClass : beanClassSet) {
-
             //过滤掉接口以及注解
             if (!beanClass.isInterface() && !beanClass.isAnnotation()) {
 
-                //TODO 暂时不实现基础包下含构造参数类的初始化
                 //记录是否有重载的构造方法
                 boolean temp = false;
                 Constructor<?>[] aConstructors = beanClass.getConstructors();

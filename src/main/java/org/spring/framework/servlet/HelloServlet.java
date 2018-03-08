@@ -26,10 +26,13 @@ public class HelloServlet extends HttpServlet {
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        //不存在对应的Handle，404
-        String contextPath = req.getContextPath();
-        System.out.println("====" + contextPath + "====");
-        resp.sendRedirect(req.getContextPath() + "/index.jsp");
+//        req.getRequestDispatcher("/asset/html/hello.html").forward(req, resp);
+
+//        resp.sendRedirect("asset/html/hello.html");
+
+        req.setAttribute("name", "jiangyixuan");
+        req.setAttribute("age", 24);
+        req.getRequestDispatcher("WEB-INF/jsp/index.jsp").forward(req, resp);
 
     }
 }

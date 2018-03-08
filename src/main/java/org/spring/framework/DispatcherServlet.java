@@ -114,9 +114,10 @@ public class DispatcherServlet extends HttpServlet {
                         for (Map.Entry<String, Object> entry : model.entrySet()) {
                             req.setAttribute(entry.getKey(), entry.getValue());
                         }
+                        //转发
+                        req.getRequestDispatcher(ConfigHelper.getAppJspPath() + path + ".jsp").forward(req, resp);
                     }
-                    //转发
-                    req.getRequestDispatcher(ConfigHelper.getAppJspPath() + path).forward(req, resp);
+
                 }
             } else if (result instanceof Data) {
                 //返回Json数据
@@ -137,8 +138,7 @@ public class DispatcherServlet extends HttpServlet {
             }
         } else {
             //不存在对应的Handle，404
-            PrintWriter writer = resp.getWriter();
-            writer.write("404");
+            req.getRequestDispatcher("/asset/html/404.html").forward(req, resp);
         }
     }
 }
