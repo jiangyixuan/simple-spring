@@ -17,6 +17,20 @@ public @interface Aspect {
      *
      * @return
      */
-    Class<? extends Annotation> value();
+    Class<? extends Annotation> value() default Aspect.class;
+
+    /**
+     * 包名
+     *
+     * @return
+     */
+    String pkg() default "";
+
+    /**
+     * 类名
+     *
+     * @return
+     */
+    String cls() default "";
 
 }
