@@ -18,37 +18,34 @@ public abstract class BaseAspect implements MethodInterceptor {
 
     @Override
     public Object intercept(Object proxy, Method methodTarget, Object[] args, MethodProxy methodProxy) throws Throwable {
-        return advice(new Pointcut(methodTarget, methodProxy), proxy, args);
-    }
-
-    protected abstract Object advice(Pointcut pointcut, Object proxy, Object[] args);
-
-    protected class Pointcut {
-
-        private Method methodTarget;
-        private MethodProxy methodProxy;
-
-        public Pointcut(Method methodTarget, MethodProxy methodProxy) {
-            this.methodTarget = methodTarget;
-            this.methodProxy = methodProxy;
-        }
-
-        public Method getMethodTarget() {
-            return methodTarget;
-        }
-
-        public MethodProxy getMethodProxy() {
-            return methodProxy;
-        }
-
-        public Object invoke(Object proxy, Object[] args) {
-            Object result = null;
+        Object result = null;
+        if (filter(methodTarget, args)) {
+            before(methodTarget, args);
             try {
                 result = methodProxy.invokeSuper(proxy, args);
-            } catch (Throwable e) {
+            } catch (Exception e) {
                 e.printStackTrace();
+                error(methodTarget, args, e);
             }
-            return result;
+            after(methodTarget, args);
+        } else {
+            result = methodProxy.invokeSuper(proxy, args);
         }
+        return result;
+
     }
+
+    protected boolean filter(Method method, Object[] args) {
+        return true;
+    }
+
+    protected void before(Method method, Object[] args) {
+    }
+
+    protected void after(Method method, Object[] args) {
+    }
+
+    protected void error(Method method, Object[] args, Exception e) {
+    }
+
 }
