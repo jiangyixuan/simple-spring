@@ -4,6 +4,7 @@ import org.spring.framework.helper.BeanHelper;
 import org.spring.framework.helper.ClassHelper;
 import org.spring.framework.helper.ControllerHelper;
 import org.spring.framework.helper.IocHelper;
+import org.spring.framework.proxy.AOPHelper;
 import org.spring.framework.util.ClassUtil;
 
 /**
@@ -18,6 +19,7 @@ public class HelperLoader {
         Class<?>[] classList = {
                 ClassHelper.class,
                 BeanHelper.class,
+                AOPHelper.class,
                 IocHelper.class,
                 ControllerHelper.class
         };

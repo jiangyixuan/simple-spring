@@ -1,6 +1,5 @@
 package org.spring.framework.helper;
 
-import org.junit.Assert;
 import org.junit.Test;
 import org.spring.framework.service.impl.UserServiceImpl;
 
@@ -16,17 +15,12 @@ public class BeanHelperTest {
 
         Map<Class<?>, Object> beanMap = BeanHelper.getBeanMap();
 
-        for (Class cls : beanMap.keySet()) {
-            System.out.println(cls.getName());
-        }
-
     }
 
     @Test
     public void getAutowiredBean() {
 
         System.out.println(BeanHelper.getBean(UserServiceImpl.class));
-        Assert.assertNotNull(BeanHelper.getBean(UserServiceImpl.class));
     }
 
 }

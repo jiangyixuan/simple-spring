@@ -9,6 +9,7 @@ import org.spring.framework.util.StringUtil;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author jiangyixuan
@@ -56,6 +57,13 @@ public class AOPHelper {
                 }
 
             }
+
+            Map<Class<?>, Object> beanMap = BeanHelper.getBeanMap();
+//            System.out.println("=============遍历容器中所有代理对象================");
+//            for (Map.Entry entry : beanMap.entrySet()) {
+//                System.out.println(entry.getKey() + "=" + entry.getValue());
+//            }
+//            System.out.println("=============遍历结束================");
 
         } catch (Exception e) {
             e.printStackTrace();
