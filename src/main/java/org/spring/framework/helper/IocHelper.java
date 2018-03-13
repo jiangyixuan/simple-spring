@@ -1,5 +1,7 @@
 package org.spring.framework.helper;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.spring.framework.annottation.Autowired;
 import org.spring.framework.util.ArrayUtil;
 import org.spring.framework.util.ReflectionUtil;
@@ -15,6 +17,8 @@ import java.util.Map;
  * @date 2018-02-28
  */
 public class IocHelper {
+
+    private static final Logger logger = LoggerFactory.getLogger(IocHelper.class);
 
     static {
         //获取并遍历所有的Bean类

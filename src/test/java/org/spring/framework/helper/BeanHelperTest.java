@@ -15,6 +15,10 @@ public class BeanHelperTest {
 
         Map<Class<?>, Object> beanMap = BeanHelper.getBeanMap();
 
+        for (Map.Entry entry : beanMap.entrySet()) {
+            System.out.println(entry.getKey());
+        }
+
     }
 
     @Test

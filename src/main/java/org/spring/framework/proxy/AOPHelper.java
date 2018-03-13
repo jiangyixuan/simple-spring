@@ -1,5 +1,7 @@
 package org.spring.framework.proxy;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.spring.framework.annottation.Aspect;
 import org.spring.framework.helper.BeanHelper;
 import org.spring.framework.helper.ClassHelper;
@@ -17,8 +19,9 @@ import java.util.Map;
  */
 public class AOPHelper {
 
-    static {
+    private static final Logger logger = LoggerFactory.getLogger(AOPHelper.class);
 
+    static {
         try {
             // 获取带有 @Aspect 注解的类（切面类）
             List<Class<?>> aspectClassList = ClassHelper.getClassListByAnnotation(Aspect.class);
@@ -47,6 +50,7 @@ public class AOPHelper {
                         // 创建代理实例
                         Object proxyInstance = baseAspect.getProxy(targetClass);
                         // 复制目标实例中的字段到代理实例中
+                        Field[] declaredFields = targetClass.getDeclaredFields();
                         for (Field field : targetClass.getDeclaredFields()) {
                             field.setAccessible(true); // 可操作私有字段
                             field.set(proxyInstance, field.get(targetInstance));
@@ -59,11 +63,11 @@ public class AOPHelper {
             }
 
             Map<Class<?>, Object> beanMap = BeanHelper.getBeanMap();
-//            System.out.println("=============遍历容器中所有代理对象================");
-//            for (Map.Entry entry : beanMap.entrySet()) {
-//                System.out.println(entry.getKey() + "=" + entry.getValue());
-//            }
-//            System.out.println("=============遍历结束================");
+            logger.info("org.spring.framework.proxy.AOPHelper:" + "遍历容器中所有代理对象");
+            for (Map.Entry entry : beanMap.entrySet()) {
+                logger.info(entry.getKey() + "=" + entry.getValue());
+            }
+            logger.info("org.spring.framework.proxy.AOPHelper:" + "遍历结束");
 
         } catch (Exception e) {
             e.printStackTrace();
