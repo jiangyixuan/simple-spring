@@ -1,6 +1,7 @@
 package org.spring.framework.bean;
 
 import org.spring.framework.util.CastUtil;
+import org.spring.framework.util.CollectionUtil;
 
 import java.util.Map;
 
@@ -33,4 +34,12 @@ public class Param {
     public Map<String, Object> getMap() {
         return paramMap;
     }
+
+    /**
+     * 验证参数是否为空
+     */
+    public boolean isEmpty() {
+        return CollectionUtil.isEmpty(paramMap);
+    }
+
 }

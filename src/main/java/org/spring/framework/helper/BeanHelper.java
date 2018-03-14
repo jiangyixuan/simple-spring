@@ -27,7 +27,6 @@ public class BeanHelper {
         for (Class<?> beanClass : beanClassSet) {
 
             if (beanClass.isAnnotationPresent(Controller.class) || beanClass.isAnnotationPresent(Service.class)) {
-
                 //过滤掉接口、注解、抽象类
                 if (!beanClass.isInterface() && !beanClass.isAnnotation() && !Modifier.isAbstract(beanClass.getModifiers())) {
 
@@ -65,13 +64,6 @@ public class BeanHelper {
      * @return
      */
     public static <T> T getBean(Class<T> cls) {
-
-//        System.out.println("=============遍历容器中所有对象================");
-//        for (Map.Entry entry : BEAN_MAP.entrySet()) {
-//            System.out.println(entry.getKey() + "=" + entry.getValue());
-//        }
-//        System.out.println("=============遍历结束================");
-
 
         if (!BEAN_MAP.containsKey(cls)) {
             throw new RuntimeException("can not get bean by class：" + cls);

@@ -23,7 +23,7 @@ public class UserController {
     private UserService userService;
 
     @Action("get:/user1")
-    public Data getUser(Param param) {
+    public Data getUser() {
         User person = userService.getUser();
         Data data = new Data(person);
         return data;

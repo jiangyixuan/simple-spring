@@ -12,7 +12,6 @@ import java.util.regex.Pattern;
  */
 public class StringUtil {
 
-
     /**
      * 字符串分隔符
      */
