@@ -7,6 +7,7 @@ import org.spring.framework.bean.View;
 import org.spring.framework.helper.BeanHelper;
 import org.spring.framework.helper.ConfigHelper;
 import org.spring.framework.helper.ControllerHelper;
+import org.spring.framework.helper.ServletHelper;
 import org.spring.framework.util.*;
 
 import javax.servlet.ServletContext;
@@ -55,6 +56,8 @@ public class DispatcherServlet extends HttpServlet {
         //获取请求方法与请求路径
         String requestMethod = req.getMethod().toLowerCase();
         String requestPath = req.getPathInfo();
+
+        ServletHelper.init(req, resp);
 
         //获取Action处理器
         Handler handler = ControllerHelper.getHandler(requestMethod, requestPath);

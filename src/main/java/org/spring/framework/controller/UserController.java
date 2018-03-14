@@ -7,6 +7,7 @@ import org.spring.framework.annottation.Controller;
 import org.spring.framework.bean.Data;
 import org.spring.framework.bean.Param;
 import org.spring.framework.bean.View;
+import org.spring.framework.helper.ServletHelper;
 import org.spring.framework.service.UserService;
 
 import java.util.HashMap;
@@ -26,6 +27,10 @@ public class UserController {
     public Data getUser() {
         User person = userService.getUser();
         Data data = new Data(person);
+
+        Object name = ServletHelper.getRequestAttribute("name");
+        System.out.println(name);
+
         return data;
     }
 
