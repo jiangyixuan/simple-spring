@@ -53,7 +53,7 @@ public class UserServiceImpl implements UserService {
             String sql = "INSERT INTO `user` VALUES (?, ?, ?);";
             Object[] params = {UUID.randomUUID().toString(), "2", 2};
             rows = DBHelper.update(sql, params);
-//            throw new Exception("插入数据库后出现异常，测试是否回滚");
+            throw new Exception("插入数据库后出现异常，测试是否回滚");
         } catch (Exception e) {
             e.printStackTrace();
         }
