@@ -2,6 +2,7 @@ package org.spring.framework.service.impl;
 
 import org.spring.framework.User;
 import org.spring.framework.annottation.Service;
+import org.spring.framework.annottation.Transaction;
 import org.spring.framework.helper.DBHelper;
 import org.spring.framework.service.UserService;
 
@@ -25,24 +26,38 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transaction
     public Integer insertUser() {
-        Integer rows = 0;
+        Integer rows = -1;
+//        try {
+//            //开启事务
+//            DBHelper.beginTransaction();
+//            String sql = "INSERT INTO `user` VALUES (?, ?, ?);";
+//            Object[] params = {UUID.randomUUID().toString(), "2", 2};
+//
+//            rows = DBHelper.update(sql, params);
+//
+//            throw new Exception("插入数据库后出现异常，测试是否回滚");
+//
+//        } catch (Exception e) {
+//            // 回滚事务
+//            DBHelper.rollbackTransaction();
+//            e.printStackTrace();
+//
+//        } finally {
+//            //提交事务
+//            DBHelper.commitTransaction();
+//        }
+
         try {
-            //开启事务
-            DBHelper.beginTransaction();
             String sql = "INSERT INTO `user` VALUES (?, ?, ?);";
             Object[] params = {UUID.randomUUID().toString(), "2", 2};
-
             rows = DBHelper.update(sql, params);
+//            throw new Exception("插入数据库后出现异常，测试是否回滚");
         } catch (Exception e) {
-            // 回滚事务
-            DBHelper.rollbackTransaction();
             e.printStackTrace();
-            throw new RuntimeException();
-        } finally {
-            //提交事务
-            DBHelper.commitTransaction();
         }
+
         return rows;
     }
 }

@@ -59,7 +59,6 @@ public class AOPHelper {
                         BeanHelper.getBeanMap().put(targetClass, proxyInstance);
                     }
                 }
-
             }
 
             Map<Class<?>, Object> beanMap = BeanHelper.getBeanMap();

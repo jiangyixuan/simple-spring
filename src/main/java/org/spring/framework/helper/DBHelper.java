@@ -96,6 +96,9 @@ public class DBHelper {
         }
     }
 
+    /**
+     * 回滚事务
+     */
     public static void rollbackTransaction() {
         Connection conn = connContainer.get();
         if (conn != null) {
