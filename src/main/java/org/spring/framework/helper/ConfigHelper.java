@@ -75,4 +75,16 @@ public class ConfigHelper {
     public static String getAppAssetPath() {
         return PropsUtil.getString(CONFIG_PROPS, ConfigConstant.APP_ASSERT_PATH);
     }
+
+    /**
+     * 获取指定属性值
+     *
+     * @param key
+     * @return
+     */
+    public static String getStringProperty(String key) {
+        return PropsUtil.getString(CONFIG_PROPS, key);
+    }
+
+
 }

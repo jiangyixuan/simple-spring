@@ -50,4 +50,9 @@ public class UserController {
         return view;
     }
 
+    @Action("get:/insertUser")
+    public Object insertUser() {
+        return userService.insertUser();
+    }
+
 }
