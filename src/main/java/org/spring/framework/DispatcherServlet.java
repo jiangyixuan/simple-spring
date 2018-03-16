@@ -146,7 +146,8 @@ public class DispatcherServlet extends HttpServlet {
             }
         } else {
             //不存在对应的Handle，404
-            req.getRequestDispatcher("/asset/html/404.html").forward(req, resp);
+            PrintWriter writer = resp.getWriter();
+            writer.write(ConfigConstant.PAGE_NOT_FIND);
         }
     }
 }
